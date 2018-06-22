@@ -9,6 +9,14 @@
 <!-- Include JavaScript dependencies -->
 <script type="text/javascript" src="./target/scala-2.12/sharetime-jsdeps.js"></script>
 <script type="text/javascript" src="./target/scala-2.12/sharetime-fastopt.js"></script>
-<input id="stu1-toggle" type="checkbox">Student 1</input>
+<button id="add">Add</button> <input id="stu-name" placeholder="Student name">
+<div id="students">
+    <div class="stu-div" hidden>
+        <input class="stu-toggle" type="checkbox">
+        <span class="checkbox-label">some name</span>
+        <progress class="stu-progress-bar" max="90" value="0"></progress>
+        <span class="stu-progress-num"></span>
+    </div>
+</div>
 </body>
 </html>
