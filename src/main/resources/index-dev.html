@@ -3,20 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>ShareTime</title>
+    <style>
+    </style>
 </head>
 <body>
 <!-- Include Scala.js compiled code -->
 <!-- Include JavaScript dependencies -->
 <script type="text/javascript" src="./target/scala-2.12/sharetime-jsdeps.js"></script>
 <script type="text/javascript" src="./target/scala-2.12/sharetime-fastopt.js"></script>
-<button id="add">Add</button> <input id="stu-name" placeholder="Student name">
+
+
+<input id="stu-name" placeholder="Student name">
+<button id="add">Add</button>
 <div id="students">
-    <div class="stu-div" hidden>
-        <input class="stu-toggle" type="checkbox">
-        <span class="checkbox-label">some name</span>
-        <progress class="stu-progress-bar" max="90" value="0"></progress>
-        <span class="stu-progress-num"></span>
-    </div>
+    <table id="stu-table">
+        <thead>
+        <tr>
+            <th>Active</th>
+            <th>Name</th>
+            <th colspan="2">Progress</th>
+        </tr>
+        </thead>
+        <tr id="stu-tr-template" hidden>
+            <td class="toggle-td"><input class="stu-toggle" type="checkbox"></td>
+            <td class="checkbox-label"></td>
+            <td class="stu-progress-bar-tr">
+                <progress max="90" value="0"></progress>
+            </td>
+            <td class="stu-progress-num"></td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

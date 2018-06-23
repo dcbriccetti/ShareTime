@@ -16,17 +16,13 @@ object ShareTime {
   }
 
   private def addStudent(): Unit = {
-    val newElement = $(".stu-div").clone().removeClass("stu-div").removeAttr("hidden")
+    val newElement = $("#stu-tr-template").clone().removeAttr("id").removeAttr("hidden")
     val stuName = $("#stu-name").valueString
-    newElement.children(".checkbox-label").text(stuName)
+    newElement.children("td.checkbox-label").text(stuName)
     val newStu = Student(stuName, newElement)
     students :+= newStu
-    newElement.children(".stu-toggle").click(() => toggleStudent(newStu))
-    newElement.appendTo("#students")
-  }
-
-  private def toggleStudent(student: Student): Unit = {
-    student.active = !student.active
+    newElement.children(".toggle-td").children(".stu-toggle").click(() => newStu.active = !newStu.active)
+    newElement.appendTo("#stu-table")
   }
 
   private def update(): Unit = {
@@ -36,7 +32,7 @@ object ShareTime {
         if (student.active) {
           student.minutesUsed += 1D / 60 / numActive
           val mu = BigDecimal(student.minutesUsed).setScale(1, HALF_UP).toString
-          student.element.children(".stu-progress-bar").value(mu)
+          student.element.children(".stu-progress-bar-tr").children("progress").value(mu)
           student.element.children(".stu-progress-num").text(mu)
         }
       }
