@@ -42,10 +42,10 @@ object ShareTime {
     if (numActive > 0)
       students.foreach { student =>
         if (student.active) {
-          student.addSharedPortionOfThisSecond(numActive)
-          val mu = BigDecimal(student.minutesUsed).setScale(1, HALF_UP).toString
-          student.progressBar.value(mu)
-          student.element.children(".stu-progress-num").text(mu)
+          student.addPortionOfSharedSecond(numActive)
+          val minsUsed = BigDecimal(student.minutesUsed).setScale(1, HALF_UP).toString
+          student.progressBar.value(minsUsed)
+          student.element.children(".stu-progress-num").text(minsUsed)
         }
       }
   }
@@ -57,5 +57,5 @@ case class Student(name: String, element: JQuery) {
 
   def progressBar: JQuery = element.children(".stu-progress-bar-tr").children("progress")
 
-  def addSharedPortionOfThisSecond(numActive: Int): Unit = minutesUsed += 1D / 60 / numActive
+  def addPortionOfSharedSecond(numActive: Int): Unit = minutesUsed += 1D / 60 / numActive
 }
