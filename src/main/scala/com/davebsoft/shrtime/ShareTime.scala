@@ -14,7 +14,7 @@ object ShareTime {
 
   private def setUpUi() = {
     val periodMinsElem = $("#period-mins")
-    periodMinsElem.value(periodMins.toString)
+    periodMinsElem value periodMins.toString
     periodMinsElem.change(() => {
       periodMins = periodMinsElem.valueString.toInt
       students.foreach(_.progressBar.attr("max", periodMins))
@@ -27,7 +27,7 @@ object ShareTime {
   def addStudents(): JQuery = {
     val sn = $("#stu-names")
     val names = sn.valueString.trim().split(',').map(_.trim)
-    names.foreach(addStudent)
+    names foreach addStudent
     sn.value("")
   }
 
@@ -37,7 +37,7 @@ object ShareTime {
     val newStu = Student(stuName, newElem)
     students :+= newStu
     newElem.children(".toggle-td").children(".stu-toggle").click(() => newStu.active = !newStu.active)
-    newElem.appendTo("#stu-table")
+    newElem appendTo "#stu-table"
   }
 
   private def update(): Unit = {
@@ -45,10 +45,10 @@ object ShareTime {
     if (numActive > 0)
       students.foreach { student =>
         if (student.active) {
-          student.addPortionOfSharedSecond(numActive)
-          val minsUsed = "%.2f".format(student.minutesUsed)
-          student.progressBar.value(minsUsed)
-          student.element.children(".stu-progress-num").text(minsUsed)
+          student addPortionOfSharedSecond numActive
+          val mins = "%.2f".format(student.minutesUsed)
+          student.progressBar value mins
+          student.element.children(".stu-progress-num").text(mins)
         }
       }
   }
