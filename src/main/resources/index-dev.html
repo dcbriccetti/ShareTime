@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
     <title>ShareTime</title>
     <style>
     </style>
@@ -12,27 +16,44 @@
 <script type="text/javascript" src="./target/scala-2.12/sharetime-jsdeps.js"></script>
 <script type="text/javascript" src="./target/scala-2.12/sharetime-fastopt.js"></script>
 
+<div class="container">
+    <h1>ShareTime</h1>
+    <p>Ensure all students get an equal portion of your time, by activating their
+        name when you are working with them.</p>
 
-<input id="stu-name" placeholder="Student name">
-<button id="add">Add</button>
-<div id="students">
-    <table id="stu-table">
+    <label for="period-mins">The number of minutes in the time period</label>
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="input-group mb-3">
+                <input id="period-mins" type='number' class='form-control'>
+            </div>
+        </div>
+    </div>
+
+    <label for="stu-name">One or more names, separated by commas</label>
+    <div class="input-group mb-3">
+        <input id="stu-name" class='form-control' placeholder="Student name">
+        <button id="add" class="btn btn-primary">Add</button>
+    </div>
+
+    <table id="stu-table" class="table table-sm">
         <thead>
         <tr>
             <th>Active</th>
             <th>Name</th>
-            <th colspan="2">Progress</th>
+            <th>Minutes</th>
         </tr>
         </thead>
         <tr id="stu-tr-template" hidden>
             <td class="toggle-td"><input class="stu-toggle" type="checkbox"></td>
             <td class="checkbox-label"></td>
+            <td class="stu-progress-num"></td>
             <td class="stu-progress-bar-tr">
                 <progress max="90" value="0"></progress>
             </td>
-            <td class="stu-progress-num"></td>
         </tr>
     </table>
+
 </div>
 </body>
 </html>
