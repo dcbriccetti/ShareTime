@@ -3,8 +3,9 @@ package com.davebsoft.shrtime
 import org.querki.jquery._
 import org.scalajs.dom
 
-import scala.math.BigDecimal.RoundingMode.HALF_UP
+import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
+@JSExportTopLevel("com.davebsoft.shrtime.ShareTime")
 object ShareTime {
   private var students = Seq[Student]()
   private var periodMins = 60
@@ -12,12 +13,6 @@ object ShareTime {
   def main(args: Array[String]): Unit = $(() => setUpUi())
 
   private def setUpUi() = {
-    $("#add-students").click(() => {
-      val sn = $("#stu-name")
-      sn.valueString.split(',').map(_.trim).foreach(addStudent)
-      sn.value("")
-    })
-
     val periodMinsElem = $("#period-mins")
     periodMinsElem.value(periodMins.toString)
     periodMinsElem.change(() => {
@@ -26,6 +21,14 @@ object ShareTime {
     })
 
     dom.window.setInterval(() => update(), 1000)
+  }
+
+  @JSExport
+  def addStudents(): JQuery = {
+    val sn = $("#stu-names")
+    val names = sn.valueString.trim().split(',').map(_.trim)
+    names.foreach(addStudent)
+    sn.value("")
   }
 
   private def addStudent(stuName: String): Unit = {
@@ -43,7 +46,7 @@ object ShareTime {
       students.foreach { student =>
         if (student.active) {
           student.addPortionOfSharedSecond(numActive)
-          val minsUsed = BigDecimal(student.minutesUsed).setScale(1, HALF_UP).toString
+          val minsUsed = "%.2f".format(student.minutesUsed)
           student.progressBar.value(minsUsed)
           student.element.children(".stu-progress-num").text(minsUsed)
         }

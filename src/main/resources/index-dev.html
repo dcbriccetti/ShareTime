@@ -30,11 +30,12 @@
         </div>
     </div>
 
-    <div class="input-group mb-3">
-        <input id="stu-name" class='form-control'
-               placeholder="One or more student names, separated by commas">
-        <button id="add-students" class="btn btn-primary">Add</button>
-    </div>
+    <form onsubmit="com.davebsoft.shrtime.ShareTime.addStudents(); return false;">
+        <div class="input-group mb-3">
+            <input id="stu-names" class='form-control'
+                   placeholder="One or more student names, separated by commas">
+        </div>
+    </form>
 
     <table id="stu-table" class="table table-sm">
         <thead>
