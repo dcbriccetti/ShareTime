@@ -17,18 +17,23 @@ object ShareTime {
     periodMinsElem value periodMins.toString
     periodMinsElem.change(() => {
       periodMins = periodMinsElem.valueString.toInt
-      students.foreach(_.progressBar.attr("max", periodMins))
+      setBarMaxes()
     })
 
     dom.window.setInterval(() => update(), 1000)
   }
 
   @JSExport
-  def addStudents(): JQuery = {
+  def addStudents(): Unit = {
     val sn = $("#stu-names")
     val names = sn.valueString.trim().split(',').map(_.trim)
     names foreach addStudent
+    setBarMaxes()
     sn.value("")
+  }
+
+  private def setBarMaxes(): Unit = {
+    students.foreach(_.setBarMax(periodMins / students.size))
   }
 
   private def addStudent(stuName: String): Unit = {
@@ -61,4 +66,6 @@ case class Student(name: String, element: JQuery) {
   def progressBar: JQuery = element.children(".stu-progress-bar-tr").children("progress")
 
   def addPortionOfSharedSecond(numActive: Int): Unit = minutesUsed += 1D / 60 / numActive
+
+  def setBarMax(max: Int): Unit = progressBar.attr("max", max)
 }
