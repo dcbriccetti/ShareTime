@@ -37,35 +37,41 @@ object ShareTime {
   }
 
   private def addStudent(stuName: String): Unit = {
-    val newElem = $("#stu-tr-template").clone().removeAttr("id").removeAttr("hidden")
-    newElem.children("td.checkbox-label").text(stuName)
-    val newStu = Student(stuName, newElem)
+    val newStu = Student(stuName)
     students :+= newStu
-    newElem.children(".toggle-td").children(".stu-toggle").click(() => newStu.active = !newStu.active)
-    newElem appendTo "#stu-table"
   }
 
   private def update(): Unit = {
     val numActive = students.count(_.active)
-    if (numActive > 0)
-      students.foreach { student =>
-        if (student.active) {
-          student addPortionOfSharedSecond numActive
-          val mins = "%.2f".format(student.minutesUsed)
-          student.progressBar value mins
-          student.element.children(".stu-progress-num").text(mins)
-        }
-      }
+    students.foreach { student =>
+      if (student.active) student addPortionOfSharedSecond numActive
+      val mins = "%.2f".format(student.minutesUsed)
+      student.progressBar value mins
+      student.progressText text mins
+    }
   }
 }
 
-case class Student(name: String, element: JQuery) {
+case class Student(name: String) {
   var minutesUsed = 0D
   var active = false
+  private val element = createElement()
 
-  def progressBar: JQuery = element.children(".stu-progress-bar-tr").children("progress")
+  private def createElement() = {
+    val element = $("#stu-tr-template").clone().removeAttr("id").removeAttr("hidden")
+    element.children("td.checkbox-label").text(name)
+    element.children(".toggle-td").children(".stu-toggle").click(() => active = !active)
+    element appendTo "#stu-table"
+    element
+  }
+
+  def progressBar: JQuery = progressTd.children("progress")
+
+  def progressText: JQuery = progressTd.children(".stu-progress-num")
 
   def addPortionOfSharedSecond(numActive: Int): Unit = minutesUsed += 1D / 60 / numActive
 
   def setBarMax(max: Int): Unit = progressBar.attr("max", max)
+
+  private def progressTd = element.children(".stu-progress-td")
 }

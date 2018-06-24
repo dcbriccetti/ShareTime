@@ -9,7 +9,7 @@
 </head>
 <body>
 <script type="text/javascript" src="./target/scala-2.12/sharetime-jsdeps.js"></script>
-<script type="text/javascript" src="./target/scala-2.12/sharetime-opt.js"></script>
+<script type="text/javascript" src="./target/scala-2.12/sharetime-fastopt.js"></script>
 
 <div class="container">
     <h1>ShareTime</h1>
@@ -32,7 +32,7 @@
         </div>
     </form>
 
-    <table id="stu-table" class="table table-sm">
+    <table id="stu-table" class="table">
         <thead>
         <tr>
             <th>Active</th>
@@ -43,9 +43,9 @@
         <tr id="stu-tr-template" hidden>
             <td class="toggle-td"><input class="stu-toggle" type="checkbox"></td>
             <td class="checkbox-label"></td>
-            <td class="stu-progress-num"></td>
-            <td class="stu-progress-bar-tr">
+            <td class="stu-progress-td">
                 <progress max="90" value="0"></progress>
+                <span class="stu-progress-num"></span>
             </td>
         </tr>
     </table>
