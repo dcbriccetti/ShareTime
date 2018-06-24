@@ -17,7 +17,7 @@ object ShareTime {
     periodMinsElem value periodMins.toString
     periodMinsElem.change(() => {
       periodMins = periodMinsElem.valueString.toInt
-      setBarMaxes()
+      adjustForStudentCount()
     })
 
     dom.window.setInterval(() => update(), 1000)
@@ -28,14 +28,17 @@ object ShareTime {
     val sn = $("#stu-names")
     val names = sn.valueString.trim().split(',').map(_.trim)
     names foreach addStudent
-    setBarMaxes()
+    adjustForStudentCount()
     sn.value("")
     $("#stu-display").removeClass("invisible")
   }
 
-  private def setBarMaxes(): Unit = {
-    val max = periodMins / students.size
-    students.foreach(_.setBarMax(max))
+  private def adjustForStudentCount(): Unit = {
+    if (students.nonEmpty) {
+      val minutesPerStudent = math.round(periodMins.toFloat / students.size)
+      $(".minutes-per").text(minutesPerStudent.toString)
+      students.foreach(_.setBarMax(minutesPerStudent))
+    }
   }
 
   private def addStudent(stuName: String): Unit = students :+= Student(stuName)
@@ -44,9 +47,9 @@ object ShareTime {
     students.foreach { student =>
       if (student.active)
         student addPortionOfSharedSecond students.count(_.active)
-      val mins = "%.2f".format(student.minutesUsed)
-      student.progressBar value mins
-      student.progressText text mins
+      val formattedMinutes = "%.2f".format(student.minutesUsed)
+      student.progressBar value formattedMinutes
+      student.progressText text formattedMinutes
     }
   }
 }
@@ -59,11 +62,11 @@ case class Student(name: String) {
   val progressText: JQuery = progressTd.children(".stu-progress-num")
 
   private def createElement() = {
-    val element = $("#stu-tr-template").clone().removeAttr("id").removeAttr("hidden")
-    element.children("td.checkbox-label").text(name)
-    element.children(".toggle-td").children(".stu-toggle").click(() => active = !active)
-    element appendTo "#stu-table"
-    element
+    val e = $("#stu-tr-template").clone().removeAttr("id").removeAttr("hidden")
+    e.children("td.checkbox-label").text(name)
+    e.children(".toggle-td").children(".stu-toggle").click(() => active = !active)
+    e appendTo "#stu-table"
+    e
   }
 
   def addPortionOfSharedSecond(numActive: Int): Unit = minutesUsed += 1D / 60 / numActive
