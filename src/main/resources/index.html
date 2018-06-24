@@ -17,14 +17,11 @@
         name when you are working with them.</p>
 
     <label for="period-mins">The number of minutes in the time period</label>
-    <div class="row">
-        <div class="col-sm-2">
-            <div class="input-group mb-3">
-                <input id="period-mins" type='number' class='form-control'>
-            </div>
-        </div>
+    <div class="input-group mb-3">
+        <input id="period-mins" type='number' class='form-control'>
     </div>
 
+    <label for="stu-names">Student Names</label>
     <form onsubmit="com.davebsoft.shrtime.ShareTime.addStudents(); return false;">
         <div class="input-group mb-3">
             <input id="stu-names" class='form-control'
@@ -32,23 +29,30 @@
         </div>
     </form>
 
-    <table id="stu-table" class="table">
-        <thead>
-        <tr>
-            <th>Active</th>
-            <th>Name</th>
-            <th>Minutes</th>
-        </tr>
-        </thead>
-        <tr id="stu-tr-template" hidden>
-            <td class="toggle-td"><input class="stu-toggle" type="checkbox"></td>
-            <td class="checkbox-label"></td>
-            <td class="stu-progress-td">
-                <progress max="90" value="0"></progress>
-                <span class="stu-progress-num"></span>
-            </td>
-        </tr>
-    </table>
+    <div id="stu-display" class="invisible">
+        <h4>Time Spent with Each Student</h4>
+        <p>Check the student or students you are now working with. Modify
+        the checks as you move to different sets of students.
+        When a bar fills, you have given that student their portion
+        of your time for the time period.</p>
+        <table id="stu-table" class="table">
+            <thead>
+            <tr>
+                <th>Active</th>
+                <th>Name</th>
+                <th>Minutes</th>
+            </tr>
+            </thead>
+            <tr id="stu-tr-template" hidden>
+                <td class="toggle-td"><input class="stu-toggle" type="checkbox"></td>
+                <td class="checkbox-label"></td>
+                <td class="stu-progress-td">
+                    <progress max="90" value="0"></progress>
+                    <span class="stu-progress-num"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>

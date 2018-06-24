@@ -30,16 +30,15 @@ object ShareTime {
     names foreach addStudent
     setBarMaxes()
     sn.value("")
+    $("#stu-display").removeClass("invisible")
   }
 
   private def setBarMaxes(): Unit = {
-    students.foreach(_.setBarMax(periodMins / students.size))
+    val max = periodMins / students.size
+    students.foreach(_.setBarMax(max))
   }
 
-  private def addStudent(stuName: String): Unit = {
-    val newStu = Student(stuName)
-    students :+= newStu
-  }
+  private def addStudent(stuName: String): Unit = students :+= Student(stuName)
 
   private def update(): Unit = {
     students.foreach { student =>
