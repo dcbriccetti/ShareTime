@@ -26,11 +26,10 @@ object ShareTime {
   @JSExport
   def addStudents(): Unit = {
     val sn = $("#stu-names")
-    val names = sn.valueString.trim().split(',').map(_.trim)
+    val names = sn.valueString.split("[,\\n]").map(_.trim).filter(_.nonEmpty)
     names foreach addStudent
     adjustForStudentCount()
     sn.value("")
-    $("#stu-display").removeClass("invisible")
   }
 
   private def adjustForStudentCount(): Unit = {
@@ -38,6 +37,9 @@ object ShareTime {
       val minutesPerStudent = math.round(periodMins.toFloat / students.size)
       $(".minutes-per").text(minutesPerStudent.toString)
       students.foreach(_.setBarMax(minutesPerStudent))
+      $("#stu-display").removeClass("invisible")
+    } else {
+      $("#stu-display").addClass("invisible")
     }
   }
 

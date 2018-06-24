@@ -24,12 +24,13 @@
     <label for="stu-names">Student Names</label>
     <form onsubmit="com.davebsoft.shrtime.ShareTime.addStudents(); return false;">
         <div class="input-group mb-3">
-            <input id="stu-names" class='form-control'
-                   placeholder="One or more student names, separated by commas">
+            <textarea id="stu-names" class='form-control'
+                   placeholder="One or more student names, separated by commas, and/or on multiple lines"></textarea>
         </div>
+        <button type="submit" class="btn btn-primary">Add Students</button>
     </form>
 
-    <div id="stu-display" class="invisible">
+    <div id="stu-display" class="invisible" style="margin-top: 1em">
         <h4>Time Spent with Each Student</h4>
         <p>Check the student or students you are now working with. Modify
         the checks as you move to different sets of students.
@@ -53,6 +54,8 @@
             </tr>
         </table>
     </div>
+    <small class="text-muted"><a href="http://davebsoft.com/">Dave Briccetti Software LLC</a>, Lafayette, California<br/>
+    <a href="https://github.com/dcbriccetti/ShareTime">Source code</a></small>
 </div>
 </body>
 </html>
