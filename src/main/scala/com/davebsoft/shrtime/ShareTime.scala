@@ -42,9 +42,9 @@ object ShareTime {
   }
 
   private def update(): Unit = {
-    val numActive = students.count(_.active)
     students.foreach { student =>
-      if (student.active) student addPortionOfSharedSecond numActive
+      if (student.active)
+        student addPortionOfSharedSecond students.count(_.active)
       val mins = "%.2f".format(student.minutesUsed)
       student.progressBar value mins
       student.progressText text mins
@@ -55,7 +55,9 @@ object ShareTime {
 case class Student(name: String) {
   var minutesUsed = 0D
   var active = false
-  private val element = createElement()
+  private val progressTd = createElement().children(".stu-progress-td")
+  val progressBar: JQuery = progressTd.children("progress")
+  val progressText: JQuery = progressTd.children(".stu-progress-num")
 
   private def createElement() = {
     val element = $("#stu-tr-template").clone().removeAttr("id").removeAttr("hidden")
@@ -65,13 +67,7 @@ case class Student(name: String) {
     element
   }
 
-  def progressBar: JQuery = progressTd.children("progress")
-
-  def progressText: JQuery = progressTd.children(".stu-progress-num")
-
   def addPortionOfSharedSecond(numActive: Int): Unit = minutesUsed += 1D / 60 / numActive
 
   def setBarMax(max: Int): Unit = progressBar.attr("max", max)
-
-  private def progressTd = element.children(".stu-progress-td")
 }
