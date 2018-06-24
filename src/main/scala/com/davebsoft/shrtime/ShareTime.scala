@@ -34,7 +34,7 @@ object ShareTime {
 
   private def adjustForStudentCount(): Unit = {
     if (students.nonEmpty) {
-      val minutesPerStudent = math.round(periodMins.toFloat / students.size)
+      val minutesPerStudent = periodMins / students.size
       $(".minutes-per").text(minutesPerStudent.toString)
       students.foreach(_.setBarMax(minutesPerStudent))
       $("#stu-display").removeClass("invisible")
